@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import ListControls from "./components/ListControls";
+import Navbar from "./components/Navbar";
 
 const API_URL = "https://api.spacexdata.com/v4/";
 
@@ -27,7 +29,18 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar/>
+      <div className="container">
+        <ListControls/>
+        <div className="row">
+          <div className="col-sm-3">
+            <img src="/img/launch-home.png" className="launch" alt="Rocket Launch"/>
+          </div>
+          <div className="col-sm-9">
 
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
