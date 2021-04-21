@@ -6,6 +6,10 @@ import localData from './test-dataset-small.json';
 
 const API_URL = "https://api.spacexdata.com/v4";
 
+const doSort = (collection, order, target) => {
+  return collection.sort((a, b) => order === 'ascending' ? a[target] - b[target] : b[target] - a[target]);
+}
+
 function App() {
 
   function init(initialState) {
@@ -16,6 +20,8 @@ function App() {
     switch (action.type) {
       case 'filter':
         return launches.filter(launch => new Date(launch.date_utc).getFullYear() === action.payload);
+      case 'sort':
+        return doSort([...state], action.payload.order, action.payload.target);
       case 'reset':
         return init(action.payload);
       default:
@@ -84,7 +90,7 @@ function App() {
     <div className="App">
       <Navbar/>
       <div className="container">
-        <ListControls launches={launches} setLaunches={setLaunches} setFilteredLaunches={setFilteredLaunches}/>
+        <ListControls launches={launches} setLaunches={setLaunches} filteredLaunches={filteredLaunches} setFilteredLaunches={setFilteredLaunches}/>
         <div className="row">
           <div className="col-sm-5">
             <img src="/img/launch-home.png" className="launch-img" alt="Rocket Launch"/>
