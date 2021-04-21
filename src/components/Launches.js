@@ -4,13 +4,15 @@ import Launch from "./Launch";
 function Launches({launches, API_URL}) {
 
   const [rockets, setRockets] = useState([]);
-  const [fetchError, setFetchError] = useState({isError: false, message: ""});
+  const [fetchingError, setFetchingError] = useState({isError: false, message: ""});
 
   useEffect(() => {
+
+    setFetchingError({isError: false});
+
     if(!launches || launches.length === 0){
       return null;
     }
-    console.log("useing fetch rockets effect");
 
     const getUniqueRockets = () => {
       return new Set(launches.map(launch => launch.rocket));
@@ -31,27 +33,31 @@ function Launches({launches, API_URL}) {
           }
         })
       }
-      console.log(requestOptions);
-      
-      setFetchError({isError: false});
+
       try {
         let response = await fetch(API_URL + "/rockets/query", requestOptions);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         let data = await response.json();
-        console.log(data);
         setRockets(data.docs);
-      } catch (error) {
-        setFetchError({isError: true, message: error.message});
+      } 
+      catch (error) {
+        setFetchingError({isError: true, message: error.message});
       }
     }
+
     queryRockets();
-  }, [launches]);
+
+  }, [launches, API_URL]);
 
   return (
     <div className="launches">
-      {launches.map((launch, index) => <Launch launch={launch} rockets={rockets} index={index} key={launch.id}/>)}
+      {
+        fetchingError.isError
+        ? <div>An error occured: <pre>fetchingError.message</pre></div>
+        : launches.map((launch, index) => <Launch launch={launch} rockets={rockets} index={index} key={launch.id}/>)
+      }
     </div>
   );
 }
