@@ -1,18 +1,9 @@
 import { useState, useEffect } from 'react';
 import nth from '../lib/FormatDate';
 
-function Launch({launch, rockets, index}) {
+function Launch({launch}) {
 
-  const [rocket, setRocket] = useState({name: ""});
   const [launchDate, setLaunchDate] = useState("");
-
-  useEffect(() => {
-    console.log("using effect rockets", rockets);
-    let rkt = rockets.find(rocket => launch.rocket === rocket.id);
-    if(rkt){
-      setRocket(rkt);
-    }
-  }, [launch, rockets]);
 
   useEffect(() => {
     console.log("using effect launchdate");
@@ -27,7 +18,7 @@ function Launch({launch, rockets, index}) {
       <div className="card-body d-flex flex-row justify-content-between">
         <div className="launch-name d-flex flex-row">
           <h1 className="card-title mb-0">
-            #{index+1}
+            #{launch.flight_number}
           </h1>
           <h1 className="card-title ms-5 mb-0">
             {launch.name}
@@ -38,7 +29,7 @@ function Launch({launch, rockets, index}) {
             {launchDate}
           </p>
           <h4 className="card-title mb-0">
-            {rocket.name}
+            {launch.rocket.name}
           </h4>
         </div>
       </div>
