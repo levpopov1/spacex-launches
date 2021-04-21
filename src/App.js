@@ -84,7 +84,7 @@ function App() {
         <ListControls launches={launches} setFilteredLaunches={setFilteredLaunches}/>
         <div className="row">
           <div className="col-sm-5">
-            <img src="/img/launch-home.png" className="launch-img" alt="Rocket Launch"/>
+            <img src="img/launch-home.png" className="launch-img" alt="Rocket Launch"/>
           </div>
           <div className="col-sm-7">
             {
