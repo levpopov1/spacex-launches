@@ -3,15 +3,19 @@ import nth from '../lib/FormatDate';
 
 function Launch({launch, rockets, index}) {
 
-  const [rocket, setRocket] = useState({});
+  const [rocket, setRocket] = useState({name: ""});
   const [launchDate, setLaunchDate] = useState("");
 
   useEffect(() => {
+    console.log("using effect rockets", rockets);
     let rkt = rockets.find(rocket => launch.rocket === rocket.id);
-    setRocket(rkt);
+    if(rkt){
+      setRocket(rkt);
+    }
   }, [launch, rockets]);
 
   useEffect(() => {
+    console.log("using effect launchdate");
     let ld = new Date(launch.date_utc);
     let day = ld.getDate();
     let fullDate = day + nth(day) + " " + ld.toLocaleDateString('default', { month: 'short', year: 'numeric' });
