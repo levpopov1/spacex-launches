@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SortControl from './SortControl';
 
-function ListControls({launches, setLaunches, filteredLaunches, setFilteredLaunches}) {
+function ListControls({launches, setFilteredLaunches}) {
 
   const [years, setYears] = useState([]);
   
@@ -32,7 +32,7 @@ function ListControls({launches, setLaunches, filteredLaunches, setFilteredLaunc
             }
           </ul>
         </div>
-        <SortControl filteredLaunches={filteredLaunches} setFilteredLaunches={setFilteredLaunches}/>
+        <SortControl setFilteredLaunches={setFilteredLaunches}/>
       </div>
     </div>
   );
