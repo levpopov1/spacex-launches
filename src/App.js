@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
+import Launches from './components/Launches';
 import ListControls from "./components/ListControls";
 import Navbar from "./components/Navbar";
+import localData from './test-dataset-small.json';
 
-const API_URL = "https://api.spacexdata.com/v4/";
+const API_URL = "https://api.spacexdata.com/v4";
 
 function App() {
 
-  const [launches, setLaunches] = useState({});
+  const [launches, setLaunches] = useState([]);
   const [fetchError, setFetchError] = useState({isError: false, message: ""});
 
   useEffect(() => {
     const getLaunches = async () => {
       setFetchError({isError: false});
       try {
-        let response = await fetch(API_URL + "launches");
+        let response = await fetch(API_URL + "/launches");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -24,7 +26,11 @@ function App() {
         setFetchError({isError: true, message: error.message});
       }
     }
-    getLaunches();
+    const getLaunchesLocal = () => {
+      console.log("fetching from local");
+      setLaunches(localData);
+    }
+    getLaunchesLocal();
   }, []);
 
   return (
@@ -33,11 +39,11 @@ function App() {
       <div className="container">
         <ListControls/>
         <div className="row">
-          <div className="col-sm-3">
-            <img src="/img/launch-home.png" className="launch" alt="Rocket Launch"/>
+          <div className="col-sm-5">
+            <img src="/img/launch-home.png" className="launch-img" alt="Rocket Launch"/>
           </div>
-          <div className="col-sm-9">
-
+          <div className="col-sm-7">
+            <Launches launches={launches} API_URL={API_URL}/>
           </div>
         </div>
       </div>
