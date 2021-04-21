@@ -47,3 +47,17 @@ $font-family: 'Brandon Grotesque', Arial, Helvetica, sans-serif;
   font-style: normal;
 }
 
+body{
+  font-family: $font-family;
+}
+
+img{
+  width: 100%;
+}
+
+.navbar-brand{
+  img{
+    width: auto;
+    height: 22px;
+  }
+}
