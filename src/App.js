@@ -2,7 +2,6 @@ import { useState, useEffect, useReducer } from 'react';
 import Launches from './components/Launches';
 import ListControls from "./components/ListControls";
 import Navbar from "./components/Navbar";
-import localData from './test-dataset-small.json';
 import doSort from './lib/DoSort';
 
 const API_URL = "https://api.spacexdata.com/v4";
@@ -74,12 +73,7 @@ function App() {
         setFetchingError({isError: true, message: error.message});
       }
     }
-
-    // const getLaunchesLocal = () => {
-    //   console.log("fetching from local");
-    //   setLaunches(localData);
-    // }
-
+    
     getLaunches();
   }, []);
 
