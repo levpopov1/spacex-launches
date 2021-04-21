@@ -67,7 +67,7 @@ function App() {
     <div className="App">
       <Navbar/>
       <div className="container">
-        <ListControls/>
+        <ListControls launches={launches} setLaunches={setLaunches}/>
         <div className="row">
           <div className="col-sm-5">
             <img src="/img/launch-home.png" className="launch-img" alt="Rocket Launch"/>
