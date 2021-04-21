@@ -3,12 +3,9 @@ import Launches from './components/Launches';
 import ListControls from "./components/ListControls";
 import Navbar from "./components/Navbar";
 import localData from './test-dataset-small.json';
+import doSort from './lib/DoSort';
 
 const API_URL = "https://api.spacexdata.com/v4";
-
-const doSort = (collection, order, target) => {
-  return collection.sort((a, b) => order === 'ascending' ? a[target] - b[target] : b[target] - a[target]);
-}
 
 function App() {
 
