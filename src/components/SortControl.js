@@ -16,7 +16,10 @@ function SortControl({setFilteredLaunches}) {
   }
   
   return (
-    <button className="btn btn-primary ms-2" onClick={() => handleSort(sortOrder)}>Sort {sortOrder}</button>
+    <button className="btn btn-primary ms-2" onClick={() => handleSort(sortOrder)}>
+      Sort {sortOrder}
+      <img src="icon/sort.png" alt="Sort icon" className="btn-icon"/>
+    </button>
   );
 }
 

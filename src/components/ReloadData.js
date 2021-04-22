@@ -22,7 +22,10 @@ function ReloadData({setFetchingError, setLaunches, setFilteredLaunches, setShow
   }
 
   return (
-    <button className="btn btn-primary" onClick={reload}>Reload</button>
+    <button className="btn btn-primary" onClick={reload}>
+      Reload
+      <img src="icon/refresh.png" alt="Sort icon" className="btn-icon"/>
+    </button>
   );
 }
 
