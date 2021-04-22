@@ -29,12 +29,10 @@ function App() {
   const [filteredLaunches, setFilteredLaunches] = useReducer(reducer, launches, init);
   const [fetchingError, setFetchingError] = useState({isError: false, message: ""});
 
-  useEffect(() => {
-    const getLaunches = async () => {
-
-      setFetchingError({isError: false});
-
-      let requestOptions = {
+  const makeAPIRequest = async (endpoint, requestOptions={}) => {
+    
+    if(Object.keys(requestOptions).length === 0){
+      requestOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48,6 +46,7 @@ function App() {
               "date_utc": 1,
               "flight_number": 1
             },
+            "pagination": true,
             "populate": [
               {
                 "path": "rocket",
@@ -59,19 +58,35 @@ function App() {
           }
         })
       }
+    }
 
-      try {
-        let response = await fetch(API_URL + "/launches/query", requestOptions);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        let data = await response.json();
-        console.log(data);
-        setLaunches(data.docs);
-        setFilteredLaunches({type: 'reset', payload: data.docs})
-      } catch (error) {
-        setFetchingError({isError: true, message: error.message});
+    try {
+      let response = await fetch(API_URL + endpoint, requestOptions);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      let data = await response.json();
+      console.log(data);
+      return {error: null, data: data.docs}
+    } 
+    catch (error) {
+      return {error: true, message: error.message, data: null}
+    }
+  }
+
+  useEffect(() => {
+    const getLaunches = async () => {
+
+      setFetchingError({isError: false});
+
+      let response = await makeAPIRequest("/launches/query");
+
+      if(response.error){
+        return setFetchingError({isError: true, message: response.message});
+      }
+      
+      setLaunches(response.data);
+      setFilteredLaunches({type: 'reset', payload: response.data});
     }
     
     getLaunches();
