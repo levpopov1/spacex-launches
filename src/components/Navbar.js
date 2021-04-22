@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReloadData from "./ReloadData";
 
-function Navbar({makeAPIRequest, setFetchingError, setLaunches, setFilteredLaunches}) {
+function Navbar({setFetchingError, setLaunches, setFilteredLaunches}) {
 
   const [showReloadMessage, setShowReloadMessage] = useState(false);
 
@@ -15,7 +15,6 @@ function Navbar({makeAPIRequest, setFetchingError, setLaunches, setFilteredLaunc
         <div className="controls d-flex flex-row align-items-center">
           {showReloadMessage && <p className="text text-success fw-bold mb-0 me-3">Data Reloaded!</p>}
           <ReloadData 
-            makeAPIRequest={makeAPIRequest} 
             setFetchingError={setFetchingError} 
             setLaunches={setLaunches} 
             setFilteredLaunches={setFilteredLaunches} 

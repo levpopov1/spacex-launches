@@ -1,4 +1,6 @@
-function ReloadData({makeAPIRequest, setFetchingError, setLaunches, setFilteredLaunches, setShowReloadMessage}) {
+import makeAPIRequest from '../lib/MakeAPIRequest';
+
+function ReloadData({setFetchingError, setLaunches, setFilteredLaunches, setShowReloadMessage}) {
 
   const reload = async () => {
     setFetchingError({isError: false});
