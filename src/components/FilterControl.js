@@ -6,7 +6,6 @@ function FilterControl({launches, setFilteredLaunches}) {
   
   useEffect(() => {
     let yearFilters = getFilters(launches);
-    console.log(yearFilters);
     setYears(yearFilters);
     return () => {
       setYears([]);

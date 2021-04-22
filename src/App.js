@@ -7,6 +7,10 @@ import makeAPIRequest from './lib/MakeAPIRequest';
 
 function App() {
 
+  const [launches, setLaunches] = useState([]);
+  const [filteredLaunches, setFilteredLaunches] = useReducer(reducer, launches, init);
+  const [fetchingError, setFetchingError] = useState({isError: false, message: ""});
+
   function init(initialState) {
     return initialState;
   }
@@ -23,12 +27,6 @@ function App() {
         throw new Error();
     }
   }
-
-  const [launches, setLaunches] = useState([]);
-  const [filteredLaunches, setFilteredLaunches] = useReducer(reducer, launches, init);
-  const [fetchingError, setFetchingError] = useState({isError: false, message: ""});
-
-  
 
   useEffect(() => {
     const getLaunches = async () => {

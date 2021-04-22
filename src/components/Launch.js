@@ -6,7 +6,6 @@ function Launch({launch}) {
   const [launchDate, setLaunchDate] = useState("");
 
   useEffect(() => {
-    console.log("using effect launchdate");
     let ld = new Date(launch.date_utc);
     let day = ld.getDate();
     let fullDate = day + nth(day) + " " + ld.toLocaleDateString('default', { month: 'short', year: 'numeric' });
