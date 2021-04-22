@@ -94,7 +94,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar makeAPIRequest={makeAPIRequest} setFetchingError={setFetchingError} setLaunches={setLaunches} setFilteredLaunches={setFilteredLaunches}/>
       <div className="container">
         <ListControls launches={launches} setFilteredLaunches={setFilteredLaunches}/>
         <div className="row">
