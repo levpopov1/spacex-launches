@@ -2,9 +2,8 @@ import { useState, useEffect, useReducer } from 'react';
 import Launches from './components/Launches';
 import ListControls from "./components/ListControls";
 import Navbar from "./components/Navbar";
-import doSort from './lib/DoSort';
-
-const API_URL = "https://api.spacexdata.com/v4";
+import sortLaunches from './lib/DoSort';
+import makeAPIRequest from './lib/MakeAPIRequest';
 
 function App() {
 
@@ -17,7 +16,7 @@ function App() {
       case 'filter':
         return launches.filter(launch => new Date(launch.date_utc).getFullYear() === action.payload);
       case 'sort':
-        return doSort([...state], action.payload.order, action.payload.target);
+        return sortLaunches([...state], action.payload.order, action.payload.target);
       case 'reset':
         return init(action.payload);
       default:
@@ -29,50 +28,7 @@ function App() {
   const [filteredLaunches, setFilteredLaunches] = useReducer(reducer, launches, init);
   const [fetchingError, setFetchingError] = useState({isError: false, message: ""});
 
-  const makeAPIRequest = async (endpoint, requestOptions={}) => {
-    
-    if(Object.keys(requestOptions).length === 0){
-      requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "query":{},
-          "options": {
-            "select": {
-              "name": 1,
-              "rocket": 1,
-              "date_utc": 1,
-              "flight_number": 1
-            },
-            "pagination": true,
-            "populate": [
-              {
-                "path": "rocket",
-                "select": {
-                  "name": 1,
-                }
-              }
-            ]
-          }
-        })
-      }
-    }
-
-    try {
-      let response = await fetch(API_URL + endpoint, requestOptions);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      let data = await response.json();
-      console.log(data);
-      return {error: null, data: data.docs}
-    } 
-    catch (error) {
-      return {error: true, message: error.message, data: null}
-    }
-  }
+  
 
   useEffect(() => {
     const getLaunches = async () => {
@@ -94,7 +50,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar makeAPIRequest={makeAPIRequest} setFetchingError={setFetchingError} setLaunches={setLaunches} setFilteredLaunches={setFilteredLaunches}/>
+      <Navbar setFetchingError={setFetchingError} setLaunches={setLaunches} setFilteredLaunches={setFilteredLaunches}/>
       <div className="container">
         <ListControls launches={launches} setFilteredLaunches={setFilteredLaunches}/>
         <div className="row">
@@ -105,7 +61,7 @@ function App() {
             {
               fetchingError.isError
               ? <div>An error occured: <pre>fetchingError.message</pre></div>
-              : <Launches launches={filteredLaunches} API_URL={API_URL}/>
+              : <Launches launches={filteredLaunches}/>
             }
           </div>
         </div>
