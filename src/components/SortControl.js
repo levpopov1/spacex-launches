@@ -6,7 +6,7 @@ function SortControl({setFilteredLaunches}) {
   const [sortOrder, setSortOrder] = useState("descending");
 
   const handleSort = (order) => {
-    setFilteredLaunches({type: "sort", payload: {order: order, target: "flight_number"}});
+    setFilteredLaunches({type: "sort", payload: {order: order, target: "date_unix"}});
     if(sortOrder === "descending"){
       setSortOrder("ascending");
     }

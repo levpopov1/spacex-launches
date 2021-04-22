@@ -15,9 +15,10 @@ export default async function makeAPIRequest(endpoint, requestOptions={}){
             "name": 1,
             "rocket": 1,
             "date_utc": 1,
+            "date_unix": 1,
             "flight_number": 1
           },
-          "pagination": true,
+          "pagination": false,
           "populate": [
             {
               "path": "rocket",
